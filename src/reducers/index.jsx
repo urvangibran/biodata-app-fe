@@ -1,6 +1,6 @@
 import { combineReducers } from "redux";
-import ContactReducer from './contact'
+import BiodataMahasiswaReducer from './biodataMahasiswa'
 
 export default combineReducers({
-    ContactReducer
+    BiodataMahasiswaReducer
 })

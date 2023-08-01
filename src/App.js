@@ -1,4 +1,4 @@
-import { ContactList } from './components'
+import { ListMahasiswa } from './components'
 
 
 function App() {
@@ -7,7 +7,7 @@ function App() {
       <div className='mt-10'>
         <h1 className='text-4xl font-bold text-center mb-3'>Data Mahasiswa</h1>
         {/* Jumlah mahasiswa */}
-        <ContactList />
+        <ListMahasiswa />
       </div>
     </div>
   );

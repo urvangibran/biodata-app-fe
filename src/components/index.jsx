@@ -1,4 +1,4 @@
-import ContactList from './ContactList'
-import AddContact from './AddContact'
+import ListMahasiswa from './ListMahasiswa'
+import AddMahasiswa from './AddMahasiswa'
 
-export {ContactList, AddContact}
+export {ListMahasiswa, AddMahasiswa}

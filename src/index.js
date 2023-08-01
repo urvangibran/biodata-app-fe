@@ -5,7 +5,7 @@ import App from './App';
 import "tw-elements-react/dist/css/tw-elements-react.min.css";
 import reportWebVitals from './reportWebVitals';
 import { legacy_createStore as createStore, compose, applyMiddleware } from 'redux'
-import { Provider, createStoreHook } from 'react-redux';
+import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import reducers from './reducers'
 import { ChakraProvider } from '@chakra-ui/react';
