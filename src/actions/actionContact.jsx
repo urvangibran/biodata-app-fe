@@ -2,6 +2,7 @@ import axios from "axios";
 
 export const GET_LIST_CONTACT = "GET_LIST_CONTACT"
 export const ADD_CONTACT = "ADD_CONTACT"
+export const DELETE_CONTACT = "DELETE_CONTACT"
 
 export const getListContact = () => {
     return (dispatch) => {
@@ -75,6 +76,47 @@ export const addContact = (data) => {
             .catch((e) => {
                 dispatch({
                     type: ADD_CONTACT,
+                    payload: {
+                        loading: false,
+                        data: false,
+                        error: e.message
+                    }
+                })
+            })
+
+    }
+}
+
+export const deleteContact = (id) => {
+    return (dispatch) => {
+
+        dispatch({
+            type: DELETE_CONTACT,
+            payload: {
+                loading: true,
+                data: false,
+                error: false
+            }
+        })
+
+        axios({
+            method: 'DELETE',
+            url: 'http://localhost:3000/contacts/' + id,
+            timeout: 120000,
+        })
+            .then((response) => {
+                dispatch({
+                    type: DELETE_CONTACT,
+                    payload: {
+                        loading: false,
+                        data: response.data,
+                        error: false
+                    }
+                })
+            })
+            .catch((e) => {
+                dispatch({
+                    type: DELETE_CONTACT,
                     payload: {
                         loading: false,
                         data: false,

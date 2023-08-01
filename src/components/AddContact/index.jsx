@@ -7,74 +7,80 @@ import {
     ModalCloseButton,
     Button,
     useDisclosure,
-} from '@chakra-ui/react'
-import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { addContact, getListContact } from '../../actions/actionContact'
-
-function AddContact() {
-    const [name, setName] = useState('')
-    const [prodi, setProdi] = useState('')
-    const [nim, setNim] = useState('')
-    const [semester, setSemester] = useState('')
-
-    const { isOpen, onOpen, onClose } = useDisclosure()
-    const dispatch = useDispatch()
-    const { addContactResult } = useSelector(state => state.ContactReducer)
-
+  } from '@chakra-ui/react';
+  import { TEInput } from "tw-elements-react";
+  import React, { useEffect, useState } from 'react';
+  import { useDispatch, useSelector } from 'react-redux';
+  import { addContact, getListContact } from '../../actions/actionContact';
+  
+  function AddContact() {
+    const [name, setName] = useState('');
+    const [prodi, setProdi] = useState('');
+    const [nim, setNim] = useState('');
+    const [semester, setSemester] = useState('');
+  
+    const { isOpen, onOpen, onClose } = useDisclosure();
+    const dispatch = useDispatch();
+    const { addContactResult, deleteContactResult } = useSelector(state => state.ContactReducer);
+  
+    const isDataFilled = name && prodi && nim && semester;
+  
     const handleSubmit = (event) => {
-        event.preventDefault()
-
-        dispatch(addContact({ name: name, prodi: prodi, nim: nim, semester: semester }))
-    }
-
+      event.preventDefault();
+      if (isDataFilled) {
+        dispatch(addContact({ name, prodi, nim, semester }));
+        onClose(); // Close the modal after successful form submission
+      }
+    };
+  
     useEffect(() => {
-        if (addContactResult) {
-            dispatch(getListContact())
-            setName('')
-            setProdi('')
-            setNim('')
-            setSemester('')
-        }
-    }, [addContactResult, dispatch])
-
+      if (addContactResult) {
+        dispatch(getListContact());
+        setName('');
+        setProdi('');
+        setNim('');
+        setSemester('');
+      }
+    }, [addContactResult, dispatch]);
+  
+    useEffect(() => {
+      if (deleteContactResult) {
+        dispatch(getListContact());
+      }
+    }, [deleteContactResult, dispatch]);
+  
     return (
-        <div>
-            <div className='flex justify-end mr-5'>
-                <Button size='sm' onClick={onOpen}>Add Data <span className='mb-1 ml-1 font-bold text-xl'>+</span> </Button>
-            </div>
-
-            <Modal isOpen={isOpen} onClose={onClose}>
-                <ModalOverlay />
-                <ModalContent>
-                    <ModalHeader>Form Input Biodata Mahasiswa</ModalHeader>
-                    <ModalCloseButton />
-                    <ModalBody>
-                        <form className='' action="" onSubmit={(event) => handleSubmit(event)}>
-                            <label htmlFor="name">Nama</label>
-                            <input className='w-full border-2 border-black rounded-sm m-1' type="text" name='name' placeholder='Nama . . .' value={name} onChange={(event) => setName(event.target.value)} />
-                            <label htmlFor="prodi">Program Studi</label>
-                            <input className='w-full border-2 border-black rounded-sm m-1' type="text" name='prodi' placeholder='Prodi . . . ' value={prodi} onChange={(event) => setProdi(event.target.value)} />
-                            <label htmlFor="nim">Nim</label>
-                            <input className='w-full border-2 border-black rounded-sm m-1' type="text" name='nim' placeholder='Nim . . .' value={nim} onChange={(event) => setNim(event.target.value)} />
-                            <label htmlFor="semester">Semester</label>
-                            <input className='w-full border-2 border-black rounded-sm m-1' type="number" name='semester' placeholder='Semester . . .' value={semester} onChange={(event) => setSemester(event.target.value)} />
-
-                            <div className='flex justify-end mt-3'>
-                                <Button mr={3} onClick={onClose}>
-                                    Close
-                                </Button>
-                                <Button className='border-1 border-black' type='submit' colorScheme='blue'>Submit</Button>
-                            </div>
-
-                        </form>
-                    </ModalBody>
-                </ModalContent>
-            </Modal>
-
-
+      <div>
+        <div className='flex justify-end mr-5'>
+          <Button size='sm' onClick={onOpen}>Add Data <span className='mb-1 ml-1 font-bold text-xl'>+</span></Button>
         </div>
-    )
-}
-
-export default AddContact
+  
+        <Modal isOpen={isOpen} onClose={onClose}>
+          <ModalOverlay />
+          <ModalContent>
+            <ModalHeader>Form Input Biodata Mahasiswa</ModalHeader>
+            <ModalCloseButton />
+            <ModalBody>
+              <form onSubmit={handleSubmit}>
+                <TEInput className='mb-8' type="text" id='name' label='Nama' name='name' value={name} onChange={(event) => setName(event.target.value)} />
+                <TEInput className='my-8' type="text" id='prodi' label='Program Studi' name='prodi' value={prodi} onChange={(event) => setProdi(event.target.value)} />
+                <TEInput className='my-8' type="text" id='nim' label='Nim' name='nim' value={nim} onChange={(event) => setNim(event.target.value)} />
+                <TEInput className='mt-8' type="number" id='semester' label='Semester' name='semester' value={semester} onChange={(event) => setSemester(event.target.value)} />
+                <div className='flex justify-end mt-3 mb-2'>
+                  <Button mr={3} onClick={onClose}>
+                    Close
+                  </Button>
+                  <Button className='border-1 border-black' type='submit' colorScheme='blue' disabled={!isDataFilled}>
+                    Submit
+                  </Button>
+                </div>
+              </form>
+            </ModalBody>
+          </ModalContent>
+        </Modal>
+      </div>
+    );
+  }
+  
+  export default AddContact;
+  

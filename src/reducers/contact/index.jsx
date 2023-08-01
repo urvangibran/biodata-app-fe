@@ -1,4 +1,4 @@
-import { GET_LIST_CONTACT, ADD_CONTACT } from '../../actions/actionContact'
+import { GET_LIST_CONTACT, ADD_CONTACT, DELETE_CONTACT } from '../../actions/actionContact'
 
 const initialState = {
     getListContactResult: false,
@@ -9,6 +9,9 @@ const initialState = {
     addContactLoading: false,
     addContactError: false,
 
+    deleteContactResult: false,
+    deleteContactLoading: false,
+    deleteContactError: false,
 }
 
 const contact = (state = initialState, action) => {
@@ -26,6 +29,14 @@ const contact = (state = initialState, action) => {
                 addContactLoading: action.payload.loading,
                 addContactResult: action.payload.data,
                 addContactError: action.payload.error
+            }
+
+        case DELETE_CONTACT:
+            return {
+                ...state,
+                deleteContactLoading: action.payload.loading,
+                deleteContactResult: action.payload.data,
+                deleteContactError: action.payload.error
             }
         default:
             return state
