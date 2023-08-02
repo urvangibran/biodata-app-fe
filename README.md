@@ -19,8 +19,9 @@ I learned a lot in this project, such as the usage of Hooks like useSelector, us
 
 1. Clone this repository.
 2. Install the required dependencies in both files by running "npm install".
-3. Run the file "bioadata-app-be" using the command "json-server --watch db.json".
-4. Then, run the "biodata-app-fe" file with the command "npm start".
+3. Clone file "biodata-app-be" [here](https://github.com/urvangibran/biodata-app-be)
+4. Run the file "bioadata-app-be" using the command "json-server --watch db.json".
+5. Then, run the "biodata-app-fe" file with the command "npm start".
 
 ## Snapshot
 
