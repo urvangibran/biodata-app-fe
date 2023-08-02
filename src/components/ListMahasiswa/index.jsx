@@ -21,7 +21,7 @@ import {
   useDisclosure,
   Button,
 } from '@chakra-ui/react';
-
+import totalMahasiswaProfile from '../../images/Vector.png'
 import AddMahasiswa from '../AddMahasiswa';
 import { TEInput } from 'tw-elements-react';
 
@@ -98,6 +98,8 @@ function ListMahasiswa() {
     return romanNumerals[num - 1] || num.toString();
   };
 
+  const totalMahasiswa = getAllMahasiswaResult.length
+
   const handleDelete = () => {
     if (selectedContact) {
       dispatch(deleteMahasiswa(selectedContact.id));
@@ -117,45 +119,64 @@ function ListMahasiswa() {
 
   return (
     <div>
-      <AddMahasiswa />
-      <TableContainer>
-        <Table variant='simple'>
-          <TableCaption>Tahun 2022 / 2023</TableCaption>
-          <Thead>
-            <Tr>
-              <Th>Nama</Th>
-              <Th>Prodi</Th>
-              <Th isNumeric>NIM</Th>
-              <Th isNumeric>Semester</Th>
-              <Th></Th>
-            </Tr>
-          </Thead>
-          <Tbody>
-            {getAllMahasiswaResult ? (
-              getAllMahasiswaResult.map((data) => (
-                <Tr key={data.id}>
-                  <Td>{data.name}</Td>
-                  <Td>{data.prodi}</Td>
-                  <Td isNumeric>{data.nim}</Td>
-                  <Td isNumeric>{getRomanNumber(data.semester)}</Td>
-                  <Td>
-                    <Button size='xs' colorScheme='red' onClick={() => handleOpenDeleteModal(data)}>
-                      Delete
-                    </Button>
-                    <Button className='ml-4' size='xs' colorScheme='blue' onClick={() => handleOpenEditModal(data)}>
-                      Edit
-                    </Button>
-                  </Td>
-                </Tr>
-              ))
-            ) : getAllMahasiswaLoading ? (
-              <p>Loading...</p>
-            ) : (
-              <p>{getAllMahasiswaError ? getAllMahasiswaError : "Data kosong!"}</p>
-            )}
-          </Tbody>
-        </Table>
-      </TableContainer>
+      <div className='mb-5'>
+        <div className='grid place-items-center'>
+          <div className='p-2 border-2 rounded-lg flex justify-center items-center'>
+            <div className="image-total bg-[#E5DFDF] px-3 py-[14px] rounded-md mr-4 ">
+              <img src={totalMahasiswaProfile} alt="" />
+            </div>
+            <div className="desc-total">
+              <h3 className='text-[#ABA7A7] font-sans'>Total Mahasiswa</h3>
+              <h3 className='font-semibold font-sans text-lg'> {totalMahasiswa} </h3>
+            </div>
+          </div>
+        </div>
+        <div className='mt-[-30px] '>
+          <AddMahasiswa />
+        </div>
+      </div>
+      <div className='max-h-[400px] overflow-auto'>
+        <TableContainer>
+          <Table variant='simple'>
+            <TableCaption>Tahun 2022 / 2023</TableCaption>
+            <Thead>
+              <Tr>
+                <Th>No</Th>
+                <Th>Nama</Th>
+                <Th>Prodi</Th>
+                <Th isNumeric>NIM</Th>
+                <Th isNumeric>Semester</Th>
+                <Th></Th>
+              </Tr>
+            </Thead>
+            <Tbody>
+              {getAllMahasiswaResult ? (
+                getAllMahasiswaResult.map((data, idx) => (
+                  <Tr key={data.id}>
+                    <Td>{idx + 1}</Td>
+                    <Td className='whitespace-pre-line max-w-xs'>{data.name}</Td>
+                    <Td className='whitespace-pre-line max-w-xs'>{data.prodi}</Td>
+                    <Td className='whitespace-pre-line max-w-xs' isNumeric>{data.nim}</Td>
+                    <Td isNumeric>{getRomanNumber(data.semester)}</Td>
+                    <Td>
+                      <Button size='xs' colorScheme='red' onClick={() => handleOpenDeleteModal(data)}>
+                        Delete
+                      </Button>
+                      <Button className='ml-4' size='xs' colorScheme='blue' onClick={() => handleOpenEditModal(data)}>
+                        Edit
+                      </Button>
+                    </Td>
+                  </Tr>
+                ))
+              ) : getAllMahasiswaLoading ? (
+                <p>Loading...</p>
+              ) : (
+                <p>{getAllMahasiswaError ? getAllMahasiswaError : "Data kosong!"}</p>
+              )}
+            </Tbody>
+          </Table>
+        </TableContainer>
+      </div>
 
       <Modal isOpen={isDeleteModalOpen} onClose={onCloseDeleteModal}>
         <ModalOverlay style={{ backgroundColor: 'rgba(0, 0, 0, 0.6)' }} />
